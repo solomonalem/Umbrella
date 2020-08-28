@@ -1,0 +1,17 @@
+.body {
+  font-size: 16px;
+}
+.container-body {
+  padding: 1rem 2rem !important;
+}
+p {
+  color: blue;
+}
+.card {
+  background-color: rgb(86, 135, 192);
+  color: white;
+}
+.btn {
+  background-color: rgb(86, 135, 192);
+  color: white;
+}
