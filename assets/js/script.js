@@ -19,9 +19,11 @@ var getCityWeather = function (city) {
     "https://api.openweathermap.org/data/2.5/weather?q=" +
     city +
     "&appid=68f1c698b646d5bab0694b00dc704137";
+  var apiForecastUrl =
+    "https://api.openweathermap.org/data/2.5/forecast?q=" +
+    city +
+    "&appid=68f1c698b646d5bab0694b00dc704137";
 
-  // format the github api url
-  console.log("clicked");
   // make a get request to url
   fetch(apiCurrentUrl).then((response) => {
     response.json().then((data) => {
@@ -29,7 +31,15 @@ var getCityWeather = function (city) {
       console.log(data);
       console.log(data.main.temp);
       console.log(data.main.humidity);
+
       displayCurrentWeather(data);
+    });
+  });
+  fetch(apiForecastUrl).then((response) => {
+    response.json().then((data) => {
+      // call diaplay current weather
+      console.log(data);
+      displayForecastWeather(data);
     });
   });
 };
@@ -52,22 +62,28 @@ var displayCurrentWeather = function (currentData) {
   cityDate.classList = "mb-3 ml-2";
   cityDate.textContent = moment().format("LL");
 
+  // create p element for temp, add class to it and assign value
   var tempEl = document.createElement("p");
   tempEl.classList = "d-block ml-2";
   tempEl.textContent = `Temperature : ${currentData.main.temp} F`;
-  //   tempEl.textContent = currentData.main.temp;
 
+  // create p element for humidity, add class to it and assign value
   var humidityEl = document.createElement("p");
   humidityEl.classList = "d-block ml-2";
   humidityEl.textContent = `Humidity : ${currentData.main.humidity} %`;
 
+  // create p element for speed, add class to it and assign value
   var speedEl = document.createElement("p");
   speedEl.classList = "d-block ml-2";
   speedEl.textContent = `Speed : ${currentData.wind.speed} mph`;
 
+  // append all to the current weather container
   currentWeather.appendChild(tempEl);
   currentWeather.appendChild(humidityEl);
   currentWeather.appendChild(speedEl);
+};
+var displayForecastWeather = function (forecastData) {
+  console.log("forecast");
 };
 
 searchButton.addEventListener("submit", formSubmitHandler);
