@@ -14,6 +14,7 @@ var getCityWeather = function (city) {
     "https://api.openweathermap.org/data/2.5/weather?q=" +
     city +
     "&units=imperial&appid=68f1c698b646d5bab0694b00dc704137";
+
   var apiForecastUrl =
     "https://api.openweathermap.org/data/2.5/forecast?q=" +
     city +
@@ -23,9 +24,18 @@ var getCityWeather = function (city) {
   fetch(apiCurrentUrl).then((response) => {
     response.json().then((data) => {
       // call diaplay current weather
-      console.log();
       displayCurrentWeather(data);
-      //   var iconurl = "http://openweathermap.org/img/w/" + iconcode + ".png";
+
+      var lat = data.coord.lat;
+      var lon = data.coord.lon;
+      //   console.log(lat, lon);
+      var apiUvUrl = `https://api.openweathermap.org/data/2.5/uvi?appid=68f1c698b646d5bab0694b00dc704137&lat=${lat}&lon=${lon}`;
+
+      fetch(apiUvUrl).then((response) => {
+        response.json().then((data) => {
+          checkUvValue(data);
+        });
+      });
     });
   });
   fetch(apiForecastUrl).then((response) => {
@@ -98,8 +108,38 @@ var displayCurrentWeather = function (currentData) {
   currentWeather.appendChild(humidityEl);
   currentWeather.appendChild(speedEl);
 };
+
+// ==========  CHECK UV  ==============================================================================================
+var checkUvValue = function (uvData) {
+  var uvValue = uvData.value;
+  // create p element for
+  var uvIndexEL = document.createElement("p");
+  uvIndexEL.classList = "d-block ml-2";
+
+  // create span element for uv -value
+  var uvEl = document.createElement("span");
+  uvEl.textContent = uvValue;
+
+  // check and classifay as severe moderate and low
+  if (uvValue < 3) {
+    uvEl.classList = "bg-success rounded px-2 py-1";
+  } else if (uvValue >= 3 && uvValue < 7) {
+    uvEl.classList = "bg-warning rounded px-2 py-1";
+  } else {
+    uvEl.classList = "bg-danger rounded px-2 py-1";
+  }
+
+  uvIndexEL.textContent = "UV Index : ";
+
+  uvIndexEL.appendChild(uvEl);
+
+  currentWeather.appendChild(uvIndexEL);
+};
+
+//========   DISPLAY FORECAST  ==================================================================================================
+
 var displayForecastWeather = function (forecastData) {
-    console.log(forecastData.list);
+  //   console.log(forecastData.list);
 
   forecastCards.textContent = "";
 
@@ -134,7 +174,6 @@ var displayForecastWeather = function (forecastData) {
 
     //   icon
     var iconCode = datum.weather[0].icon;
-    console.log(iconCode);
 
     var iconUrl = "http://openweathermap.org/img/w/" + iconCode + ".png";
 

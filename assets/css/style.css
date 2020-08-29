@@ -34,3 +34,7 @@ img{
     color:black;
     /* background-color: rgb(187, 35, 35); */
 }
+span{
+    color:white;
+    font-size:.9rem;
+}
