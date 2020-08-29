@@ -1,44 +1,35 @@
 //  kAPI_KEY     68f1c698b646d5bab0694b00dc704137
 
-//  var apiUrl =
-// "https://api.openweathermap.org/data/2.5/forecast?q=" +
-// cityName +
-// "&appid=68f1c698b646d5bab0694b00dc704137";
-
-// api.openweathermap.org/data/2.5/weather?q={city name}&appid={your api key}
 var bodyContainer = document.querySelector(".container-body");
 var mainBody = document.querySelector(".main-body");
-var cityName = document.querySelector("#city-name");
-var cityDate = document.querySelector("#city-date");
+// var cityName = document.querySelector("#city-name");
+// var cityDate = document.querySelector("#city-date");
 var cityInputName = document.querySelector("#city-input");
 var searchButton = document.querySelector("#city-form");
 var currentWeather = document.querySelector("#current-weather");
+var forecastCards = document.querySelector("#forecast-cards");
 
 var getCityWeather = function (city) {
   var apiCurrentUrl =
     "https://api.openweathermap.org/data/2.5/weather?q=" +
     city +
-    "&appid=68f1c698b646d5bab0694b00dc704137";
+    "&units=imperial&appid=68f1c698b646d5bab0694b00dc704137";
   var apiForecastUrl =
     "https://api.openweathermap.org/data/2.5/forecast?q=" +
     city +
-    "&appid=68f1c698b646d5bab0694b00dc704137";
+    "&units=imperial&appid=68f1c698b646d5bab0694b00dc704137";
 
   // make a get request to url
   fetch(apiCurrentUrl).then((response) => {
     response.json().then((data) => {
       // call diaplay current weather
-      console.log(data);
-      console.log(data.main.temp);
-      console.log(data.main.humidity);
-
       displayCurrentWeather(data);
     });
   });
   fetch(apiForecastUrl).then((response) => {
     response.json().then((data) => {
-      // call diaplay current weather
-      console.log(data);
+      // call diaplay forecast weather
+
       displayForecastWeather(data);
     });
   });
@@ -58,14 +49,28 @@ var formSubmitHandler = function (event) {
 };
 
 var displayCurrentWeather = function (currentData) {
+  currentWeather.textContent = "";
+
+  //   cityName.textContent = currentData.name;
+
+  //   cityDate.classList = "mb-3 ml-2";
+  //   cityDate.textContent = moment().format("LL");
+
+  var cityName = document.createElement("h2");
+  cityName.classList = "row mb-4 ml-2 d-block";
   cityName.textContent = currentData.name;
-  cityDate.classList = "mb-3 ml-2";
+
+  var cityDate = document.createElement("h6");
+  cityDate.classList = "ml-1";
   cityDate.textContent = moment().format("LL");
+
+  // append the date to the name header
+  cityName.appendChild(cityDate);
 
   // create p element for temp, add class to it and assign value
   var tempEl = document.createElement("p");
   tempEl.classList = "d-block ml-2";
-  tempEl.textContent = `Temperature : ${currentData.main.temp} F`;
+  tempEl.textContent = `Temperature : ${currentData.main.temp} °F`;
 
   // create p element for humidity, add class to it and assign value
   var humidityEl = document.createElement("p");
@@ -78,12 +83,57 @@ var displayCurrentWeather = function (currentData) {
   speedEl.textContent = `Speed : ${currentData.wind.speed} mph`;
 
   // append all to the current weather container
+  currentWeather.appendChild(cityName);
   currentWeather.appendChild(tempEl);
   currentWeather.appendChild(humidityEl);
   currentWeather.appendChild(speedEl);
 };
 var displayForecastWeather = function (forecastData) {
-  console.log("forecast");
+  console.log(forecastData.list[0].main.temp);
+  //   console.log(moment("2020-08-29", moment.defaultFormat).toDate());
+
+  for (var i = 0; i < forecastData.list.length; i += 8) {
+    var datum = forecastData.list[i];
+    var dateFormated = moment(datum.dt_txt.split(" ")[0]).format("L");
+    var tempForecastValue = datum.main.temp;
+    var humidity = datum.main.humidity;
+
+    console.log(tempForecastValue);
+
+    //create div element
+    var cardEl = document.createElement("div");
+    cardEl.classList = "card m-2";
+
+    // card header----------------------
+    var cardHeader = document.createElement("div");
+    cardHeader.classList = "card-header";
+    cardHeader.textContent = dateFormated;
+
+    // card body--------------------
+    var cardBody = document.createElement("div");
+    cardBody.classList = "card-body";
+
+    // create p element for temp
+    var tempForecastEL = document.createElement("p");
+    tempForecastEL.classList = "d-block";
+    tempForecastEL.textContent = `Temp :${tempForecastValue} °F`;
+
+    // create p element for humidity°
+    var humidityForecastEL = document.createElement("p");
+    humidityForecastEL.classList = "d-block";
+    humidityForecastEL.textContent = `Humidity: ${humidity} %`;
+
+    // append to the card-body
+    cardBody.appendChild(tempForecastEL);
+    cardBody.appendChild(humidityForecastEL);
+
+    // append card -header and card body to card
+    cardEl.appendChild(cardHeader);
+    cardEl.appendChild(cardBody);
+
+    // append it to the
+    forecastCards.appendChild(cardEl);
+  }
 };
 
 searchButton.addEventListener("submit", formSubmitHandler);
