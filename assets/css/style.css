@@ -19,7 +19,7 @@ p {
   font-family: "Raleway", sans-serif !important;
 }
 .card {
-  background-color: rgb(200, 212, 226);
+  background-color: rgb(17, 2, 119);
   font-family: "Raleway", sans-serif !important;
   color: white;
  
@@ -28,4 +28,9 @@ p {
   background-color: rgb(86, 135, 192);
   font-family: "Raleway", sans-serif !important;
   color: white;
+}
+img{
+   
+    color:black;
+    /* background-color: rgb(187, 35, 35); */
 }

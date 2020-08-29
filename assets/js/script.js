@@ -23,7 +23,9 @@ var getCityWeather = function (city) {
   fetch(apiCurrentUrl).then((response) => {
     response.json().then((data) => {
       // call diaplay current weather
+      console.log();
       displayCurrentWeather(data);
+      //   var iconurl = "http://openweathermap.org/img/w/" + iconcode + ".png";
     });
   });
   fetch(apiForecastUrl).then((response) => {
@@ -51,7 +53,14 @@ var formSubmitHandler = function (event) {
 var displayCurrentWeather = function (currentData) {
   currentWeather.textContent = "";
 
-  //   cityName.textContent = currentData.name;
+  //   icon
+  var iconCode = currentData.weather[0].icon;
+  var iconUrl = "http://openweathermap.org/img/w/" + iconCode + ".png";
+
+  //create span
+  var iconEl = document.createElement("img");
+  iconEl.setAttribute("src", iconUrl);
+  iconEl.classList = "ml-5";
 
   //   cityDate.classList = "mb-3 ml-2";
   //   cityDate.textContent = moment().format("LL");
@@ -61,10 +70,11 @@ var displayCurrentWeather = function (currentData) {
   cityName.textContent = currentData.name;
 
   var cityDate = document.createElement("h6");
-  cityDate.classList = "ml-1";
+  cityDate.classList = "ml-1 d-block";
   cityDate.textContent = moment().format("LL");
 
   // append the date to the name header
+  cityName.appendChild(iconEl);
   cityName.appendChild(cityDate);
 
   // create p element for temp, add class to it and assign value
@@ -89,8 +99,9 @@ var displayCurrentWeather = function (currentData) {
   currentWeather.appendChild(speedEl);
 };
 var displayForecastWeather = function (forecastData) {
-  console.log(forecastData.list[0].main.temp);
-  //   console.log(moment("2020-08-29", moment.defaultFormat).toDate());
+    console.log(forecastData.list);
+
+  forecastCards.textContent = "";
 
   for (var i = 0; i < forecastData.list.length; i += 8) {
     var datum = forecastData.list[i];
@@ -98,11 +109,9 @@ var displayForecastWeather = function (forecastData) {
     var tempForecastValue = datum.main.temp;
     var humidity = datum.main.humidity;
 
-    console.log(tempForecastValue);
-
     //create div element
     var cardEl = document.createElement("div");
-    cardEl.classList = "card m-2";
+    cardEl.classList = "card mr-2";
 
     // card header----------------------
     var cardHeader = document.createElement("div");
@@ -115,15 +124,27 @@ var displayForecastWeather = function (forecastData) {
 
     // create p element for temp
     var tempForecastEL = document.createElement("p");
-    tempForecastEL.classList = "d-block";
-    tempForecastEL.textContent = `Temp :${tempForecastValue} °F`;
+    tempForecastEL.classList = "d-block ml-4";
+    tempForecastEL.textContent = `${tempForecastValue} °F`;
 
     // create p element for humidity°
     var humidityForecastEL = document.createElement("p");
     humidityForecastEL.classList = "d-block";
     humidityForecastEL.textContent = `Humidity: ${humidity} %`;
 
+    //   icon
+    var iconCode = datum.weather[0].icon;
+    console.log(iconCode);
+
+    var iconUrl = "http://openweathermap.org/img/w/" + iconCode + ".png";
+
+    //create span
+    var iconEl = document.createElement("img");
+    iconEl.setAttribute("src", iconUrl);
+    iconEl.classList = "ml-4";
+
     // append to the card-body
+    cardBody.appendChild(iconEl);
     cardBody.appendChild(tempForecastEL);
     cardBody.appendChild(humidityForecastEL);
 
