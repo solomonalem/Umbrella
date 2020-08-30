@@ -1,40 +1,159 @@
-.body {
+/* BCB5E5
+46549A
+85CCF2
+D8EFF8
+DEE8F6
+101150
+A7D4F0 */
+
+.body,
+html {
   font-size: 16px;
   font-family: "Raleway", sans-serif !important;
 }
-h1,
-h2,
-h3,
+
+/* h2,
 h4,
-h5,
 h6 {
   font-family: "Raleway", sans-serif !important;
+  color: rgb(39, 39, 39);
+} */
+.text-color-dark {
+  font-family: "Raleway", sans-serif !important;
+  color: rgb(39, 39, 39);
+  text-shadow: none;
+}
+.border {
+  border: 1px solid rgb(73, 138, 199) !important;
 }
 
 .container-body {
+  min-height: 100vh;
+
   padding: 1rem 2rem !important;
 }
+
+#current-weather {
+  padding: 0.5rem;
+}
 p {
-  color: blue;
+  color: rgb(70, 70, 70);
+}
+
+.nav {
+  font-family: "Raleway", sans-serif !important;
+  position: relative;
+  z-index: 10;
+  background-color: transparent;
+}
+.nav-item {
+  font-size: 0.9rem;
+}
+.mode {
+  border: 2px solid rgb(97, 164, 228);
+  border-radius: 0.9rem;
+  width: 1rem;
+  cursor: pointer;
+  padding: 0.01rem 0.8rem;
+  background-color: rgb(25, 10, 32);
+  font-size: 0.7rem;
+}
+.mode:hover {
+  border-radius: 9rem;
+  padding: 0.1rem 0.6rem;
+  border: 2px solid rgb(97, 164, 228);
+  box-shadow: 0px 0px 4px 2px rgb(153, 209, 235);
+}
+#search-body {
+  z-index: 20;
+}
+
+p {
+  color: rgb(124, 145, 214);
   font-family: "Raleway", sans-serif !important;
 }
 .card {
-  background-color: rgb(17, 2, 119);
+  background-image: linear-gradient(
+    181deg,
+    #12184b 0%,
+    #1e3e8f 33%,
+    #0d1b72 56%,
+    #1c22be 100%
+  );
+
+  box-shadow: 0px 0px 54px -12px rgba(1, 13, 124, 0.83);
+
   font-family: "Raleway", sans-serif !important;
   color: white;
- 
 }
 .btn {
   background-color: rgb(86, 135, 192);
   font-family: "Raleway", sans-serif !important;
   color: white;
 }
-img{
-   
-    color:black;
-    /* background-color: rgb(187, 35, 35); */
+span {
+  color: white;
+  font-size: 0.9rem;
 }
-span{
-    color:white;
-    font-size:.9rem;
+/**=====================================================================================mode   */
+.bg-nav {
+  background-image: linear-gradient(
+    90deg,
+    #182e4b 0%,
+    #060f20 33%,
+    #0a2952 56%,
+    #0d1e35 100%
+  );
+}
+.bg-card {
+  background-image: linear-gradient(
+    181deg,
+    #101431 0%,
+    #0d1322 33%,
+    #151c47 56%,
+    #0b0e63 100%
+  );
+
+  box-shadow: 0px 0px 54px -12px rgba(1, 13, 124, 0.83);
+}
+.bg-current-day {
+  box-shadow: 0px 0px 84px -12px rgba(13, 16, 49, 0.83);
+  background-image: linear-gradient(
+    90deg,
+    #0d1236 0%,
+    #182850 33%,
+    #161f5c 56%,
+    #0b0b1d 100%
+  );
+}
+.bg-container-body {
+  background-image: linear-gradient(
+    90deg,
+    #6e9fdf 0%,
+    #517cc7 33%,
+    #6797d4 56%,
+    #7794bb 100%
+  );
+}
+.bg-search-body {
+  background-image: linear-gradient(
+    180deg,
+    #0a0d24 0%,
+    #16294d 33%,
+    #07244b 56%,
+    #02306d 100%
+  );
+
+  box-shadow: 0px 0px 54px -12px rgba(1, 13, 124, 0.83);
+}
+.text-color-light {
+  color: rgb(147, 204, 236);
+  font-family: "Raleway", sans-serif !important;
+  /* text-shadow: 10px 10px rgb(255, 255, 255); */
+  text-shadow: 0px 0px 10px #0b071f;
+
+  font-weight: 300;
+}
+.p-color {
+  color: rgb(164, 181, 235);
 }

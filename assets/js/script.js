@@ -2,12 +2,24 @@
 
 var bodyContainer = document.querySelector(".container-body");
 var mainBody = document.querySelector(".main-body");
-// var cityName = document.querySelector("#city-name");
-// var cityDate = document.querySelector("#city-date");
-var cityInputName = document.querySelector("#city-input");
-var searchButton = document.querySelector("#city-form");
+var searchBody = document.querySelector("#search-body");
 var currentWeather = document.querySelector("#current-weather");
 var forecastCards = document.querySelector("#forecast-cards");
+var card = document.querySelector(".card");
+
+var cityName = document.querySelector("#city-name");
+var cityDate = document.querySelector("#city-date");
+
+var headingForecast = document.querySelector("#heading-forecast");
+var headingSearch = document.querySelector("#heading-search");
+var cityInputName = document.querySelector("#city-input");
+var searchButton = document.querySelector("#city-form");
+var changeModeBtn = document.querySelector("#mode");
+var navBar = document.querySelector("#nav");
+var cardEl = document.createElement("div");
+
+// get darkModeState from local storage
+var darkModeState = localStorage.getItem("darkMode");
 
 var getCityWeather = function (city) {
   var apiCurrentUrl =
@@ -45,6 +57,13 @@ var getCityWeather = function (city) {
       displayForecastWeather(data);
     });
   });
+
+  // call enable if the
+  darkModeState = localStorage.getItem("darkMode");
+  if (darkModeState === "enabled") {
+    setTimeout(enableDark, 250);
+    // enableDark();
+  }
 };
 
 var formSubmitHandler = function (event) {
@@ -67,19 +86,21 @@ var displayCurrentWeather = function (currentData) {
   var iconCode = currentData.weather[0].icon;
   var iconUrl = "http://openweathermap.org/img/w/" + iconCode + ".png";
 
-  //create span
+  //create span for icon
   var iconEl = document.createElement("img");
   iconEl.setAttribute("src", iconUrl);
   iconEl.classList = "ml-5";
 
-  //   cityDate.classList = "mb-3 ml-2";
-  //   cityDate.textContent = moment().format("LL");
-
-  var cityName = document.createElement("h2");
+  darkModeState = localStorage.getItem("darkMode");
+  if (darkModeState === "enabled") {
+    cityName.classList = "row mb-4 ml-2 d-block text-color-light";
+  }
+  // create h2 element for city name and add classlist
   cityName.classList = "row mb-4 ml-2 d-block";
   cityName.textContent = currentData.name;
 
-  var cityDate = document.createElement("h6");
+  // create h6 element for city date and format the date
+
   cityDate.classList = "ml-1 d-block";
   cityDate.textContent = moment().format("LL");
 
@@ -110,11 +131,12 @@ var displayCurrentWeather = function (currentData) {
 };
 
 // ==========  CHECK UV  ==============================================================================================
+
 var checkUvValue = function (uvData) {
   var uvValue = uvData.value;
   // create p element for
   var uvIndexEL = document.createElement("p");
-  uvIndexEL.classList = "d-block ml-2";
+  uvIndexEL.classList = "d-block ml-2 ";
 
   // create span element for uv -value
   var uvEl = document.createElement("span");
@@ -130,17 +152,16 @@ var checkUvValue = function (uvData) {
   }
 
   uvIndexEL.textContent = "UV Index : ";
-
+  // append uv value to uv term
   uvIndexEL.appendChild(uvEl);
 
+  // append uv element to the page
   currentWeather.appendChild(uvIndexEL);
 };
 
 //========   DISPLAY FORECAST  ==================================================================================================
 
 var displayForecastWeather = function (forecastData) {
-  //   console.log(forecastData.list);
-
   forecastCards.textContent = "";
 
   for (var i = 0; i < forecastData.list.length; i += 8) {
@@ -151,7 +172,7 @@ var displayForecastWeather = function (forecastData) {
 
     //create div element
     var cardEl = document.createElement("div");
-    cardEl.classList = "card mr-2";
+    cardEl.classList = "card mr-2 mb-2 col-xs-12 ";
 
     // card header----------------------
     var cardHeader = document.createElement("div");
@@ -195,56 +216,100 @@ var displayForecastWeather = function (forecastData) {
     forecastCards.appendChild(cardEl);
   }
 };
+var enableDark = function () {
+  // get html collections
+
+  var card = document.getElementsByClassName("card");
+  var currentWeatherP = document.querySelectorAll("#current-weather p");
+
+  Array.from(currentWeatherP).forEach((el) => {
+    //   el.clasList.remove('current-weather p');
+    el.classList.add("p-color");
+  });
+
+  // change htmlCollections to array
+  Array.from(card).forEach(function (el) {
+    el.classList.add("bg-card");
+    console.log(el);
+  });
+
+  headingForecast.classList.remove("text-color-dark");
+  headingSearch.classList.remove("text-color-dark");
+  cityName.classList.remove("text-color-dark");
+  cityDate.classList.remove("text-color-dark");
+
+  headingForecast.classList.add("text-color-light");
+  headingSearch.classList.add("text-color-light");
+  cityName.classList.add("text-color-light");
+  cityDate.classList.add("text-color-light");
+
+  bodyContainer.classList.add("bg-container-body");
+  currentWeather.classList.add("bg-current-day");
+  searchBody.classList.add("bg-search-body");
+  searchBody.classList.remove("border");
+  navBar.classList.add("bg-nav");
+
+  // save it in localstorage
+
+  localStorage.setItem("darkMode", "enabled");
+
+  console.log("enable koyna hji");
+};
+
+//==---------------------------- DISABLE ------------------================================================================
+var disableDark = function () {
+  // get html collections
+  var card = document.getElementsByClassName("card");
+  var currentWeatherP = document.querySelectorAll("#current-weather p");
+
+  Array.from(currentWeatherP).forEach((el) => {
+    //   el.clasList.remove('current-weather p');
+    el.classList.remove("p-color");
+  });
+
+  // change htmlCollections to array
+  Array.from(card).forEach(function (el) {
+    el.classList.remove("bg-card");
+  });
+  headingForecast.classList.remove("text-color-light");
+  headingSearch.classList.remove("text-color-light");
+  cityName.classList.remove("text-color-light");
+  cityDate.classList.remove("text-color-light");
+
+  headingForecast.classList.add("text-color-dark");
+  headingSearch.classList.add("text-color-dark");
+  cityName.classList.add("text-color-dark");
+  cityDate.classList.add("text-color-dark");
+
+  bodyContainer.classList.remove("bg-container-body");
+  currentWeather.classList.remove("bg-current-day");
+  searchBody.classList.remove("bg-search-body");
+  searchBody.classList.remove("border");
+  navBar.classList.remove("bg-nav");
+
+  // save it in localstorage
+
+  localStorage.setItem("darkMode", null);
+};
+
+// call enable if the
+darkModeState = localStorage.getItem("darkMode");
+if (darkModeState === "enabled") {
+  
+    enableDark();
+}
+
+var changeModeColor = function () {
+  // get darkModeState from local storage
+  darkModeState = localStorage.getItem("darkMode");
+  if (darkModeState === "enabled") {
+    // enableDark();
+    disableDark();
+  } else {
+    enableDark();
+  }
+};
 
 searchButton.addEventListener("submit", formSubmitHandler);
 
-// var displayRepos = function (repos, searchTerm) {
-//     // check if api returned any repos
-//     if (repos.length === 0) {
-//       repoContainerEl.textContent = "No repositories found.";
-//       return;
-//     }
-
-//     // clear old content
-//     repoContainerEl.textContent = "";
-//     repoSearchTerm.textContent = searchTerm;
-
-//     // loop over repos
-//     for (var i = 0; i < repos.length; i++) {
-//       // format repo name
-//       var repoName = repos[i].owner.login + "/" + repos[i].name;
-
-//       // create a link for each repo
-//       var repoEl = document.createElement("a");
-//       repoEl.classList = "list-item flex-row justify-space-between align-center";
-//       repoEl.setAttribute("href", "./single-repo.html?repo=" + repoName);
-
-//       // create a span element to hold repository name
-//       var titleEl = document.createElement("span");
-//       titleEl.textContent = repoName;
-
-//       // append to container
-//       repoEl.appendChild(titleEl);
-
-//       // create a status element
-//       var statusEl = document.createElement("span");
-//       statusEl.classList = "flex-row align-center";
-
-//       // check if current repo has issues or not
-//       if (repos[i].open_issues_count > 0) {
-//         statusEl.innerHTML =
-//           "<i class='fas fa-times status-icon icon-danger'></i>" +
-//           repos[i].open_issues_count +
-//           " issue(s)";
-//       } else {
-//         statusEl.innerHTML =
-//           "<i class='fas fa-check-square status-icon icon-success'></i>";
-//       }
-
-//       // append to container
-//       repoEl.appendChild(statusEl);
-
-//       // append container to the dom
-//       repoContainerEl.appendChild(repoEl);
-//     }
-//   };
+changeModeBtn.addEventListener("click", changeModeColor);
