@@ -61,7 +61,7 @@ var getCityWeather = function (city) {
   // call enable if the
   darkModeState = localStorage.getItem("darkMode");
   if (darkModeState === "enabled") {
-    setTimeout(enableDark, 250);
+    setTimeout(enableDark, 300);
     // enableDark();
   }
 };
@@ -73,10 +73,60 @@ var formSubmitHandler = function (event) {
 
   if (cityName) {
     getCityWeather(cityName);
+    // save it to local storage
+    addToLocalStorageArray(cityName);
+
     cityInputName.value = "";
   } else {
     alert("Please enter a correct city name");
   }
+};
+
+// ========   save to  local storage==================================
+
+// var saveToLocalStorage = function(data){
+//     // our array
+// var cities = [];
+
+// // push data to the array
+// cities.push(data);
+//
+// // storing our array as a string
+// localStorage.setItem("searchedCities", JSON.stringify(cities));
+//
+// // retrieving our data and converting it back into an array
+// // var retrievedData = localStorage.getItem("searchedCities");
+
+// // var cities2 = JSON.parse(retrievedData);
+// }
+var addToLocalStorageArray = function (cityName) {
+  var cities = [];
+
+  // Get the existing data
+  var cities = localStorage.getItem("searchedCities");
+
+ 
+  // If no cities data, create an array
+
+  // Otherwise, convert the localStorage string to an array
+  cities = cities ? cities.split(",") : [];
+
+  // Add new data to localStorage Array if there is an item in it
+  if (cities.length > 0) {
+    if (cities.indexOf(cityName) === -1) {
+      
+      cities.push(cityName);
+    }
+  }
+  // if cities is empty push cityname
+  if (cities.length === 0) {
+    cities.push(cityName);
+  }
+  
+
+  // Save back to localStorage
+  localStorage.setItem("searchedCities", cities.toString());
+  console.log(cities);
 };
 
 var displayCurrentWeather = function (currentData) {
@@ -230,7 +280,6 @@ var enableDark = function () {
   // change htmlCollections to array
   Array.from(card).forEach(function (el) {
     el.classList.add("bg-card");
-    console.log(el);
   });
 
   headingForecast.classList.remove("text-color-dark");
@@ -249,11 +298,11 @@ var enableDark = function () {
   searchBody.classList.remove("border");
   navBar.classList.add("bg-nav");
 
+  cityInputName.classList.add("bg-input");
+
   // save it in localstorage
 
   localStorage.setItem("darkMode", "enabled");
-
-  console.log("enable koyna hji");
 };
 
 //==---------------------------- DISABLE ------------------================================================================
@@ -295,8 +344,7 @@ var disableDark = function () {
 // call enable if the
 darkModeState = localStorage.getItem("darkMode");
 if (darkModeState === "enabled") {
-  
-    enableDark();
+  enableDark();
 }
 
 var changeModeColor = function () {

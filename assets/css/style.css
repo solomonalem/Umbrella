@@ -157,3 +157,6 @@ span {
 .p-color {
   color: rgb(164, 181, 235);
 }
+.bg-input{
+    background-color:black;
+}
