@@ -1,4 +1,4 @@
-//  kAPI_KEY     68f1c698b646d5bab0694b00dc704137
+//  kAPI_KEY
 
 var bodyContainer = document.querySelector(".container-body");
 var mainBody = document.querySelector(".main-body");
@@ -6,6 +6,7 @@ var searchBody = document.querySelector("#search-body");
 var currentWeather = document.querySelector("#current-weather");
 var forecastCards = document.querySelector("#forecast-cards");
 var card = document.querySelector(".card");
+var lastSearchedEl = document.querySelector("#last-searched");
 
 var cityName = document.querySelector("#city-name");
 var cityDate = document.querySelector("#city-date");
@@ -21,16 +22,20 @@ var cardEl = document.createElement("div");
 // get darkModeState from local storage
 var darkModeState = localStorage.getItem("darkMode");
 
+var apiKey = config.API_KEY;
+
 var getCityWeather = function (city) {
   var apiCurrentUrl =
     "https://api.openweathermap.org/data/2.5/weather?q=" +
     city +
-    "&units=imperial&appid=68f1c698b646d5bab0694b00dc704137";
+    "&units=imperial&appid=" +
+    apiKey;
 
   var apiForecastUrl =
     "https://api.openweathermap.org/data/2.5/forecast?q=" +
     city +
-    "&units=imperial&appid=68f1c698b646d5bab0694b00dc704137";
+    "&units=imperial&appid=" +
+    apiKey;
 
   // make a get request to url
   fetch(apiCurrentUrl).then((response) => {
@@ -41,7 +46,7 @@ var getCityWeather = function (city) {
       var lat = data.coord.lat;
       var lon = data.coord.lon;
       //   console.log(lat, lon);
-      var apiUvUrl = `https://api.openweathermap.org/data/2.5/uvi?appid=68f1c698b646d5bab0694b00dc704137&lat=${lat}&lon=${lon}`;
+      var apiUvUrl = `https://api.openweathermap.org/data/2.5/uvi?appid=${apiKey}&lat=${lat}&lon=${lon}`;
 
       fetch(apiUvUrl).then((response) => {
         response.json().then((data) => {
@@ -61,7 +66,7 @@ var getCityWeather = function (city) {
   // call enable if the
   darkModeState = localStorage.getItem("darkMode");
   if (darkModeState === "enabled") {
-    setTimeout(enableDark, 300);
+    setTimeout(enableDark, 400);
     // enableDark();
   }
 };
@@ -74,38 +79,21 @@ var formSubmitHandler = function (event) {
   if (cityName) {
     getCityWeather(cityName);
     // save it to local storage
-    addToLocalStorageArray(cityName);
+    saveToLocalStorage(cityName);
 
     cityInputName.value = "";
   } else {
     alert("Please enter a correct city name");
   }
 };
+// ========  SAVE TO LOCALSTORAGE     -------------------------------------------------
 
-// ========   save to  local storage==================================
-
-// var saveToLocalStorage = function(data){
-//     // our array
-// var cities = [];
-
-// // push data to the array
-// cities.push(data);
-//
-// // storing our array as a string
-// localStorage.setItem("searchedCities", JSON.stringify(cities));
-//
-// // retrieving our data and converting it back into an array
-// // var retrievedData = localStorage.getItem("searchedCities");
-
-// // var cities2 = JSON.parse(retrievedData);
-// }
-var addToLocalStorageArray = function (cityName) {
+var saveToLocalStorage = function (cityName) {
   var cities = [];
 
   // Get the existing data
   var cities = localStorage.getItem("searchedCities");
 
- 
   // If no cities data, create an array
 
   // Otherwise, convert the localStorage string to an array
@@ -114,7 +102,6 @@ var addToLocalStorageArray = function (cityName) {
   // Add new data to localStorage Array if there is an item in it
   if (cities.length > 0) {
     if (cities.indexOf(cityName) === -1) {
-      
       cities.push(cityName);
     }
   }
@@ -122,12 +109,14 @@ var addToLocalStorageArray = function (cityName) {
   if (cities.length === 0) {
     cities.push(cityName);
   }
-  
 
   // Save back to localStorage
   localStorage.setItem("searchedCities", cities.toString());
-  console.log(cities);
+
+  loadWeatherApp();
 };
+
+// -------------- DISPLAY CURRENT WEATHER -------------------------------------
 
 var displayCurrentWeather = function (currentData) {
   currentWeather.textContent = "";
@@ -180,7 +169,7 @@ var displayCurrentWeather = function (currentData) {
   currentWeather.appendChild(speedEl);
 };
 
-// ==========  CHECK UV  ==============================================================================================
+// ==========  CHECK UV INDEX ==============================================================================================
 
 var checkUvValue = function (uvData) {
   var uvValue = uvData.value;
@@ -209,7 +198,7 @@ var checkUvValue = function (uvData) {
   currentWeather.appendChild(uvIndexEL);
 };
 
-//========   DISPLAY FORECAST  ==================================================================================================
+//========   DISPLAY FORECAST  =================================================================================================
 
 var displayForecastWeather = function (forecastData) {
   forecastCards.textContent = "";
@@ -266,6 +255,9 @@ var displayForecastWeather = function (forecastData) {
     forecastCards.appendChild(cardEl);
   }
 };
+
+// -----------  ENABLE DARK MODE ------------------------------------------------------
+
 var enableDark = function () {
   // get html collections
 
@@ -305,7 +297,7 @@ var enableDark = function () {
   localStorage.setItem("darkMode", "enabled");
 };
 
-//==---------------------------- DISABLE ------------------================================================================
+//==---------------------------- DISABLE DARK MODE ------------------================================================================
 var disableDark = function () {
   // get html collections
   var card = document.getElementsByClassName("card");
@@ -336,6 +328,8 @@ var disableDark = function () {
   searchBody.classList.remove("border");
   navBar.classList.remove("bg-nav");
 
+  cityInputName.classList.remove("bg-input");
+
   // save it in localstorage
 
   localStorage.setItem("darkMode", null);
@@ -346,7 +340,7 @@ darkModeState = localStorage.getItem("darkMode");
 if (darkModeState === "enabled") {
   enableDark();
 }
-
+//  -----   CHANGE MODE COLOR ----------------------------------------
 var changeModeColor = function () {
   // get darkModeState from local storage
   darkModeState = localStorage.getItem("darkMode");
@@ -358,6 +352,54 @@ var changeModeColor = function () {
   }
 };
 
+var loadWeatherApp = function () {
+  var cities = localStorage.getItem("searchedCities");
+  cities = cities ? cities.split(",") : [];
+  console.log(cities);
+
+  renderSearchedCities(cities);
+};
+
+// -----   RENDER SEARCHED CITIES -----------------------------------
+
+var renderSearchedCities = function (arrayOfCities) {
+  // var arrayOfCities = localStorage.getItem("searchedCities");
+  // arrayOfCities = arrayOfCities ? arrayOfCities.split(",") : [];
+
+  var lastSearched = arrayOfCities[arrayOfCities.length - 1];
+
+  // call to load the last searched city;
+  // getCityWeather(lastSearched);
+
+  //   setTimeout(enableDark, 300, lastSearched);
+  // clear first the previous cities from the UI
+  lastSearchedEl.textContent = "";
+
+  for (var i = arrayOfCities.length - 1; i >= 0; i--) {
+    // create p element
+    var searchedEl = document.createElement("p");
+
+    searchedEl.classList.add("p-2");
+    searchedEl.classList.add("border");
+    searchedEl.classList.add("m-1");
+    searchedEl.textContent = arrayOfCities[i];
+
+    lastSearchedEl.appendChild(searchedEl);
+    searchBody.appendChild(lastSearchedEl);
+  }
+};
+
+// get element ---------------------
+var getElement = function (event) {
+  var city = event.target.innerText;
+
+  getCityWeather(city);
+};
+
+loadWeatherApp();
+
 searchButton.addEventListener("submit", formSubmitHandler);
 
 changeModeBtn.addEventListener("click", changeModeColor);
+
+lastSearchedEl.addEventListener("click", getElement);

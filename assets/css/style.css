@@ -35,6 +35,7 @@ h6 {
 
 #current-weather {
   padding: 0.5rem;
+  min-height: 45vh;
 }
 p {
   color: rgb(70, 70, 70);
@@ -46,6 +47,12 @@ p {
   z-index: 10;
   background-color: transparent;
 }
+.nav .fa-umbrella {
+  color: #41d2e6;
+  font-size: 2rem;
+  padding: 0rem 0.3rem;
+}
+
 .nav-item {
   font-size: 0.9rem;
 }
@@ -66,6 +73,7 @@ p {
 }
 #search-body {
   z-index: 20;
+  min-height: 80vh;
 }
 
 p {
@@ -87,13 +95,25 @@ p {
   color: white;
 }
 .btn {
-  background-color: rgb(86, 135, 192);
+  /* background-color: rgb(86, 135, 192); */
+  background-image: linear-gradient(
+    180deg,
+    #366eb8 0%,
+    #517cc7 33%,
+    #3e72b8 56%,
+    #1d5092 100%
+  );
   font-family: "Raleway", sans-serif !important;
   color: white;
 }
 span {
   color: white;
   font-size: 0.9rem;
+}
+.form-control {
+  border: 1px solid rgba(156, 165, 177, 0.432);
+
+  outline: hidden;
 }
 /**=====================================================================================mode   */
 .bg-nav {
@@ -157,6 +177,7 @@ span {
 .p-color {
   color: rgb(164, 181, 235);
 }
-.bg-input{
-    background-color:black;
+.bg-input {
+  background-color: black;
+  box-shadow: 0px 0px 19px -3px rgb(42, 75, 138);
 }
