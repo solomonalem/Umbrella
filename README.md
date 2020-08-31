@@ -18,7 +18,7 @@ AN Application that helps you to check current weather and five days forecast wi
 
 ## Website
 
-https://solomonmeresa.github.io/Work-Daily-Scheduler/
+https://solomonmeresa.github.io/weather-app/
 
 ## Visuals
 
