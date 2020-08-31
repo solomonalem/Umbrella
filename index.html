@@ -31,8 +31,7 @@
   <body>
     <div class="nav d-flex bg-dark justify-content-between" id="nav">
       <div class="nav-logo text-light p-3">
-        <i class="fas fa-umbrella"></i>Weather
-        Dashboard
+        <i class="fas fa-umbrella"></i>Weather Dashboard
       </div>
       <div class="nav-item text-light p-3 mr-3">
         Mode<span id="mode" class="mode m-3">0</span>
@@ -47,7 +46,7 @@
           <div class="search">
             <form id="city-form">
               <h4 class="" id="heading-search">Search for a city</h4>
-              <div class="input-group my-3">
+              <div class="input-group my-3 d-flex">
                 <input
                   id="city-input"
                   type="text"
@@ -55,7 +54,7 @@
                   placeholder="city name"
                 />
                 <div class="input-group-append">
-                  <button id="search-btn" class="btn" type="submit">
+                  <button id="search-btn" class="btn col-xs-8" type="submit">
                     Search
                   </button>
                 </div>
@@ -70,6 +69,12 @@
             <h2 class="row m-2" id="city-name">
               <h6 class="ml-2" id="city-date"></h6>
             </h2>
+            <div class="intro-section">
+              <h3 class="intro-text" id="intro-text">
+                Check the weather incase you <br />need your
+                <div><i class="fas fa-umbrella" id="umbrella"></i></div>
+              </h3>
+            </div>
           </div>
           <h4 class="d-block my-4" id="heading-forecast">Forecast</h4>
           <div class="row d-flex my-1" id="forecast-cards">

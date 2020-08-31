@@ -325,7 +325,7 @@ var disableDark = function () {
   bodyContainer.classList.remove("bg-container-body");
   currentWeather.classList.remove("bg-current-day");
   searchBody.classList.remove("bg-search-body");
-  searchBody.classList.remove("border");
+  searchBody.classList.add("border");
   navBar.classList.remove("bg-nav");
 
   cityInputName.classList.remove("bg-input");
@@ -355,23 +355,17 @@ var changeModeColor = function () {
 var loadWeatherApp = function () {
   var cities = localStorage.getItem("searchedCities");
   cities = cities ? cities.split(",") : [];
-  console.log(cities);
+ 
 
-  renderSearchedCities(cities);
+  renderSearchedCities();
 };
 
 // -----   RENDER SEARCHED CITIES -----------------------------------
 
-var renderSearchedCities = function (arrayOfCities) {
-  // var arrayOfCities = localStorage.getItem("searchedCities");
-  // arrayOfCities = arrayOfCities ? arrayOfCities.split(",") : [];
+var renderSearchedCities = function () {
+  var arrayOfCities = localStorage.getItem("searchedCities");
+  arrayOfCities = arrayOfCities ? arrayOfCities.split(",") : [];
 
-  var lastSearched = arrayOfCities[arrayOfCities.length - 1];
-
-  // call to load the last searched city;
-  // getCityWeather(lastSearched);
-
-  //   setTimeout(enableDark, 300, lastSearched);
   // clear first the previous cities from the UI
   lastSearchedEl.textContent = "";
 
@@ -381,6 +375,7 @@ var renderSearchedCities = function (arrayOfCities) {
 
     searchedEl.classList.add("p-2");
     searchedEl.classList.add("border");
+
     searchedEl.classList.add("m-1");
     searchedEl.textContent = arrayOfCities[i];
 

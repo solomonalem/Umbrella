@@ -12,19 +12,78 @@ html {
   font-family: "Raleway", sans-serif !important;
 }
 
-/* h2,
-h4,
-h6 {
+/*--------------- intro-section------------------------------- */
+.intro-section {
+  min-height: 40vh;
+  display: flex;
   font-family: "Raleway", sans-serif !important;
-  color: rgb(39, 39, 39);
-} */
+  justify-content: center;
+  align-content: center;
+  border-radius: 0.5rem;
+  /* border: 2px solid black; */
+  padding: 2rem 3rem;
+  box-shadow: 0px 0px 8px -1px rgba(13, 16, 49, 0.83);
+  background-image: linear-gradient(
+    90deg,
+    #0d1236 0%,
+    #182850 33%,
+    #161f5c 56%,
+    #0b0b1d 100%
+  );
+}
+.intro-section .intro-text {
+  /* color:rgb(75, 241, 233); */
+  color: rgb(50, 163, 158);
+  text-align: center;
+  font-weight: 400;
+  animation: slidedown 2s;
+}
+.intro-section #umbrella {
+  padding: 2rem;
+  font-size: 2.5rem;
+  color: #41d2e6;
+  animation: slidein 4s;
+}
 .text-color-dark {
   font-family: "Raleway", sans-serif !important;
   color: rgb(39, 39, 39);
   text-shadow: none;
 }
+
+@keyframes slidein {
+  0% {
+    transform: translateX(200%);
+    opacity: 0;
+  }
+
+  30% {
+    transform: translateX(250%);
+    opacity: 0;
+  }
+  80% {
+    transform: translateX(-20%);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(0%);
+    opacity: 1;
+  }
+}
+@keyframes slidedown {
+  0% {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+
+  100% {
+    transform: translateY(0%);
+    opacity: 1;
+  }
+}
+
 .border {
   border: 1px solid rgb(73, 138, 199) !important;
+  border-radius: 4px;;
 }
 
 .container-body {
@@ -45,13 +104,14 @@ p {
   font-family: "Raleway", sans-serif !important;
   position: relative;
   z-index: 10;
-  background-color: transparent;
 }
 .nav .fa-umbrella {
   color: #41d2e6;
+
   font-size: 2rem;
   padding: 0rem 0.3rem;
 }
+    
 
 .nav-item {
   font-size: 0.9rem;
@@ -119,10 +179,10 @@ span {
 .bg-nav {
   background-image: linear-gradient(
     90deg,
-    #182e4b 0%,
-    #060f20 33%,
-    #0a2952 56%,
-    #0d1e35 100%
+    #0d1236 0%,
+    #182850 33%,
+    #161f5c 56%,
+    #0b0b1d 100%
   );
 }
 .bg-card {
@@ -137,7 +197,6 @@ span {
   box-shadow: 0px 0px 54px -12px rgba(1, 13, 124, 0.83);
 }
 .bg-current-day {
-  box-shadow: 0px 0px 84px -12px rgba(13, 16, 49, 0.83);
   background-image: linear-gradient(
     90deg,
     #0d1236 0%,
@@ -180,4 +239,10 @@ span {
 .bg-input {
   background-color: black;
   box-shadow: 0px 0px 19px -3px rgb(42, 75, 138);
+}
+#last-searched p {
+  cursor: pointer;
+}
+#last-searched p:hover {
+ background-color: rgb(30, 41, 105);
 }
