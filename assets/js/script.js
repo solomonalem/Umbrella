@@ -17,6 +17,7 @@ var cityInputName = document.querySelector("#city-input");
 var searchButton = document.querySelector("#city-form");
 var changeModeBtn = document.querySelector("#mode");
 var navBar = document.querySelector("#nav");
+var navItem = document.querySelector(".nav-item");
 var cardEl = document.createElement("div");
 
 // get darkModeState from local storage
@@ -305,6 +306,10 @@ var enableDark = function () {
 
   cityInputName.classList.add("bg-input");
 
+  // change togglers text
+  navItem.textContent = `Light-mode`;
+  navItem.appendChild(changeModeBtn);
+
   // save it in localstorage
 
   localStorage.setItem("darkMode", "enabled");
@@ -346,6 +351,10 @@ var disableDark = function () {
   navBar.classList.remove("bg-nav");
 
   cityInputName.classList.remove("bg-input");
+
+  //change toggler text
+  navItem.textContent = `Dark-mode`;
+  navItem.appendChild(changeModeBtn);
 
   // save it in localstorage
 

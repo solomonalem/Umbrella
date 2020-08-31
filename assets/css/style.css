@@ -113,7 +113,6 @@ p {
 }
 
 .nav-item {
-  
   font-size: 0.8rem;
 }
 .mode {
@@ -124,6 +123,7 @@ p {
   padding: 0.01rem 0.8rem;
   background-color: rgb(25, 10, 32);
   font-size: 0.7rem;
+  transition: all 0.2s ease-in-out;
 }
 .mode:hover {
   border-radius: 9rem;
@@ -153,6 +153,10 @@ p {
 
   font-family: "Raleway", sans-serif !important;
   color: white;
+  transition: all 0.2s ease-in-out;
+}
+.card:hover {
+  transform: scale(1.02);
 }
 .btn {
   /* background-color: rgb(86, 135, 192); */
