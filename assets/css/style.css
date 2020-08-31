@@ -83,7 +83,7 @@ html {
 
 .border {
   border: 1px solid rgb(73, 138, 199) !important;
-  border-radius: 4px;;
+  border-radius: 4px;
 }
 
 .container-body {
@@ -111,10 +111,10 @@ p {
   font-size: 2rem;
   padding: 0rem 0.3rem;
 }
-    
 
 .nav-item {
-  font-size: 0.9rem;
+  
+  font-size: 0.8rem;
 }
 .mode {
   border: 2px solid rgb(97, 164, 228);
@@ -204,6 +204,7 @@ span {
     #161f5c 56%,
     #0b0b1d 100%
   );
+  box-shadow: 0px 0px 54px 2px rgb(15, 21, 77);
 }
 .bg-container-body {
   background-image: linear-gradient(
@@ -223,7 +224,8 @@ span {
     #02306d 100%
   );
 
-  box-shadow: 0px 0px 54px -12px rgba(1, 13, 124, 0.83);
+  /* box-shadow: 0px 0px 54px -12px rgba(1, 13, 124, 0.83); */
+  box-shadow: 0px 0px 54px 2px rgb(15, 21, 77);
 }
 .text-color-light {
   color: rgb(147, 204, 236);
@@ -244,5 +246,5 @@ span {
   cursor: pointer;
 }
 #last-searched p:hover {
- background-color: rgb(30, 41, 105);
+  background-color: rgb(30, 41, 105);
 }

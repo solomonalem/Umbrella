@@ -100,15 +100,23 @@ var saveToLocalStorage = function (cityName) {
   cities = cities ? cities.split(",") : [];
 
   // Add new data to localStorage Array if there is an item in it
-  if (cities.length > 0) {
+  if (cities.length > 0 && cities.length <= 8) {
     if (cities.indexOf(cityName) === -1) {
       cities.push(cityName);
     }
   }
+  // if array length reaches max and the item is not on the array replace it with the last one
+  if (cities.length > 8) {
+    if (cities.indexOf(cityName) === -1) {
+      cities.splice(8, 1, cityName);
+    }
+  }
+
   // if cities is empty push cityname
   if (cities.length === 0) {
     cities.push(cityName);
   }
+  // if cities is empty push cityname
 
   // Save back to localStorage
   localStorage.setItem("searchedCities", cities.toString());
@@ -274,19 +282,24 @@ var enableDark = function () {
     el.classList.add("bg-card");
   });
 
+  // remove all dark - colors from heading class
   headingForecast.classList.remove("text-color-dark");
   headingSearch.classList.remove("text-color-dark");
   cityName.classList.remove("text-color-dark");
   cityDate.classList.remove("text-color-dark");
 
+  // add light text-color to headings
   headingForecast.classList.add("text-color-light");
   headingSearch.classList.add("text-color-light");
   cityName.classList.add("text-color-light");
   cityDate.classList.add("text-color-light");
 
+  // add dark background to containers
   bodyContainer.classList.add("bg-container-body");
   currentWeather.classList.add("bg-current-day");
   searchBody.classList.add("bg-search-body");
+
+  //remove border and nav background
   searchBody.classList.remove("border");
   navBar.classList.add("bg-nav");
 
@@ -312,16 +325,20 @@ var disableDark = function () {
   Array.from(card).forEach(function (el) {
     el.classList.remove("bg-card");
   });
+
+  // remove all light - colors from heading class
   headingForecast.classList.remove("text-color-light");
   headingSearch.classList.remove("text-color-light");
   cityName.classList.remove("text-color-light");
   cityDate.classList.remove("text-color-light");
 
+  // add dark - colors for all heading classes
   headingForecast.classList.add("text-color-dark");
   headingSearch.classList.add("text-color-dark");
   cityName.classList.add("text-color-dark");
   cityDate.classList.add("text-color-dark");
 
+  // remove all dark - backgrounds from containers
   bodyContainer.classList.remove("bg-container-body");
   currentWeather.classList.remove("bg-current-day");
   searchBody.classList.remove("bg-search-body");
@@ -355,7 +372,6 @@ var changeModeColor = function () {
 var loadWeatherApp = function () {
   var cities = localStorage.getItem("searchedCities");
   cities = cities ? cities.split(",") : [];
- 
 
   renderSearchedCities();
 };
