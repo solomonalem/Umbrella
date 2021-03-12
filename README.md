@@ -1,4 +1,4 @@
-# weather-app
+# Umbrella
 
 ## Purpose
 
@@ -38,4 +38,4 @@ Fully - responsive
 
 Made by solomon
 
-### ©️2020 Weather-app
+### ©️2020 Umbrella
